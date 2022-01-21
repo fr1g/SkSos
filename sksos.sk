@@ -1,0 +1,37 @@
+#Author: Feiron Iguista from Corona Studio.
+#For more info about Corona Studio, visit https://corona.studio (Simplified Chinese)
+
+on join:
+        set metadata value "emgIndv" of player to false
+    
+on quit:
+        set metadata value "emgIndv" of player to false
+
+
+on command "/fran_Sk_Save_Me_Announce_Sk":#All commands like this can be changed freely. Personally, I Suggest you enable this sk with BetterGUI or some plugin simillar.
+        if sender is a player:
+                if metadata value "emgIndv" of player is true:
+                        cancel event
+                        message "<dark red><bold>世界监管<gray>>>><orange>你有一次求救未消除。在聊天栏发送“:re”以广播一个新位置。" to the player#Send :re in chat to refresh player's location
+                if metadata value "emgIndv" of player is false:
+                        cancel event
+                        set metadata value "emgIndv" of player to true
+                        message "<dark red><bold>世界监管<gray>>>><red><bold>!!!<orange><bold>%player%<white>正在<red><bold>%location of sender%<white> 附近   向周围发出<orange><bold>紧急求救信号" to all players#send the location immediately
+
+
+on command "/fran_Sk_Solve":
+        if sender is a player:
+                if metadata value "emgIndv" of player is true:
+                        cancel event
+                        set metadata value "emgIndv" of player to false
+                        message "<dark red><bold>世界监管<gray>>>><orange><bold>%player%<white>的<orange>紧急信号 <lime green><bold>已解除<gray>：<aqua>已脱险" to all players#announce the SOS cancelled.
+                else:
+                        message "<dark red><bold>世界监管<gray>>>><orange><bold>没有待解除的紧急求救信号" to the sender
+
+
+on chat:
+        sender is a player:
+                if metadata value "emgIndv" of player is true:
+                        if the message is ":re":
+                                cancel event
+                                message "<dark red><bold>世界监管<gray>>>><orange>%player%<white>更新了求救坐标到<red><bold>%location of sender%" to all players#how to broadcast the refreshed location?
